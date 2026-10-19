@@ -4,7 +4,7 @@ import re
 import sys
 
 PATTERN = re.compile(
-    r'^\S+ - \[.+\] "GET /projects/260 HTTP/1.1" (\d+) (\d+)$')
+    r'^\S+ - \[.+\] "GET /projects/260 HTTP/1.1" (\S+) (\d+)$')
 CODES = ['200', '301', '400', '401', '403', '404', '405', '500']
 
 
@@ -23,7 +23,7 @@ def main():
     counts = dict((code, 0) for code in CODES)
     try:
         for line in sys.stdin:
-            match = PATTERN.match(line.rstrip("\n"))
+            match = PATTERN.match(line.strip())
             if match is None:
                 continue
             code, size = match.groups()
